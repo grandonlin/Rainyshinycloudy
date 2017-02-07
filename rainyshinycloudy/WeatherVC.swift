@@ -21,9 +21,10 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation!
+    let dataDownloader = DataDownload()
     
     var currentWeather : CurrentWeather!
-    //var forecast: Forecast!
+    //var forecast = Forecast()
     var forecasts = [Forecast]()
     
     
@@ -39,6 +40,8 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         tableView.delegate = self
         tableView.dataSource = self
         
+        
+        
         currentWeather = CurrentWeather()
         }
 
@@ -52,8 +55,9 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
             Location.sharedInstance.latitude = currentLocation?.coordinate.latitude
             Location.sharedInstance.longitude = currentLocation?.coordinate.longitude
             print(Location.sharedInstance.latitude, Location.sharedInstance.longitude)
-            currentWeather.downloadWeatherDetails {
+            dataDownloader.downloadWeatherDetails {
                 self.downloadForecastDetails {
+                    self.currentWeather.receiveData(dataDownload: self.dataDownloader)
                     self.uploadMainUI()
                     self.tableView.reloadData()
                 }
@@ -64,6 +68,7 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     }
     
     func downloadForecastDetails(completed: @escaping DownloadComplete) {
+        var forecasts = [Forecast]()
         let forecastURL = URL(string: FORECAST_URL)!
         Alamofire.request(forecastURL).responseJSON { response in
             let result = response.result
@@ -71,14 +76,15 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
                 if let list = dict["list"] as? [Dictionary<String, Any>] {
                     for obj in list {
                         let forecast = Forecast(weatherDict: obj)
-                        self.forecasts.append(forecast)
+                        forecasts.append(forecast)
                     }
-                    self.forecasts.remove(at: 0)
+                    forecasts.remove(at: 0)
                 }
             }
             completed()
         }
     }
+
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1

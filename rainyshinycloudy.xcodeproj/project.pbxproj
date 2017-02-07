@@ -20,6 +20,7 @@
 		C1A14C271E39A0220029F7D5 /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A14C261E39A0220029F7D5 /* Forecast.swift */; };
 		C1A14C291E4434130029F7D5 /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A14C281E4434130029F7D5 /* WeatherCell.swift */; };
 		C1A14C2B1E46C2AD0029F7D5 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A14C2A1E46C2AD0029F7D5 /* Location.swift */; };
+		C1A14C321E4984580029F7D5 /* DataDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A14C311E4984580029F7D5 /* DataDownload.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		C1A14C261E39A0220029F7D5 /* Forecast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 		C1A14C281E4434130029F7D5 /* WeatherCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
 		C1A14C2A1E46C2AD0029F7D5 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		C1A14C311E4984580029F7D5 /* DataDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataDownload.swift; sourceTree = "<group>"; };
 		C52B2A0556FF602183DF7A59 /* Pods-rainyshinycloudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rainyshinycloudy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rainyshinycloudy/Pods-rainyshinycloudy.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -172,7 +174,6 @@
 		C1A14C2D1E46D97F0029F7D5 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C1A14C221E35B61A0029F7D5 /* Constants.swift */,
 				C1A14C281E4434130029F7D5 /* WeatherCell.swift */,
 			);
 			name = View;
@@ -184,6 +185,8 @@
 				C1A14C241E35B9040029F7D5 /* CurrentWeather.swift */,
 				C1A14C261E39A0220029F7D5 /* Forecast.swift */,
 				C1A14C2A1E46C2AD0029F7D5 /* Location.swift */,
+				C1A14C221E35B61A0029F7D5 /* Constants.swift */,
+				C1A14C311E4984580029F7D5 /* DataDownload.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				C1A14C231E35B61A0029F7D5 /* Constants.swift in Sources */,
 				C1A14C271E39A0220029F7D5 /* Forecast.swift in Sources */,
 				C1A14C2B1E46C2AD0029F7D5 /* Location.swift in Sources */,
+				C1A14C321E4984580029F7D5 /* DataDownload.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

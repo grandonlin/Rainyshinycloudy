@@ -70,8 +70,7 @@ class Forecast {
         
     }
     
-    
-    
+        
 }
 
 extension Date {
