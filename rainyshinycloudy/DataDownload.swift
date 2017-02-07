@@ -18,7 +18,7 @@ class DataDownload {
     
     func downloadWeatherDetails(completed: @escaping DownloadComplete) {
         let currentWeatherURL = URL(string: CURRENT_WEATHER_URL)!
-        print(CURRENT_WEATHER_URL)
+        //print(CURRENT_WEATHER_URL)
         Alamofire.request(currentWeatherURL).responseJSON { response in
             let result = response.result
             
@@ -26,13 +26,13 @@ class DataDownload {
                 
                 if let name = dict["name"] as? String {
                     self.currentCityName = name.capitalized
-                    print(self.currentCityName)
+                    //print(self.currentCityName)
                 }
                 
                 if let weather = dict["weather"] as? [Dictionary<String, Any>] {
                     if let main = weather[0]["main"] as? String {
                         self.currentWeatherType = main.capitalized
-                        print(self.currentWeatherType)
+                        //print(self.currentWeatherType)
                     }
                 }
                 
@@ -40,7 +40,7 @@ class DataDownload {
                     if let currentTemperature = main["temp"] as? Double {
                         let kelvinToCelsius = Double(round(currentTemperature - 273.15))
                         self.currentTemp = kelvinToCelsius
-                        print(self.currentTemp)
+                        //print(self.currentTemp)
                     }
                 }
             }
@@ -50,7 +50,7 @@ class DataDownload {
     
     func downloadForecastDetails(completed: @escaping DownloadComplete) {
         let forecastURL = URL(string: FORECAST_URL)!
-        print(forecastURL)
+        //print(forecastURL)
         Alamofire.request(forecastURL).responseJSON { response in
             let result = response.result
             if let dict = result.value as? Dictionary<String, Any> {

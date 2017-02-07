@@ -51,11 +51,11 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
             }
             Location.sharedInstance.latitude = currentLocation?.coordinate.latitude
             Location.sharedInstance.longitude = currentLocation?.coordinate.longitude
-            print(Location.sharedInstance.latitude, Location.sharedInstance.longitude)
+            //print(Location.sharedInstance.latitude, Location.sharedInstance.longitude)
             dataDownloader.downloadWeatherDetails {
                 self.dataDownloader.downloadForecastDetails {
-                    print(self.dataDownloader.currentCityName)
-                    print(self.dataDownloader.forecasts)
+                    //print(self.dataDownloader.currentCityName)
+                    //print(self.dataDownloader.forecasts)
                     self.currentWeather.receiveData(dataDownload: self.dataDownloader)
                     self.uploadMainUI()
                     self.tableView.reloadData()
@@ -73,7 +73,9 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //print(dataDownloader.forecasts.count)
         return dataDownloader.forecasts.count
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
