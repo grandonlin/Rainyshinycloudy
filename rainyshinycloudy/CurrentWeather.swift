@@ -51,8 +51,8 @@ class CurrentWeather {
     }
     
     func receiveData(dataDownload: DataDownload) {
-        self._cityName = dataDownload.currentCityName
-        self._weatherType = dataDownload.currentWeatherType
-        self._currentTemp = dataDownload.currentTemp
+            self._cityName = dataDownload.currentCityName
+            self._weatherType = dataDownload.currentWeatherType
+            self._currentTemp = dataDownload.currentTemp
     }
 }

@@ -22,10 +22,9 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation!
     let dataDownloader = DataDownload()
-    
     var currentWeather : CurrentWeather!
     //var forecast = Forecast()
-    var forecasts = [Forecast]()
+    
     
     
     override func viewDidLoad() {
@@ -39,8 +38,6 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        
         
         currentWeather = CurrentWeather()
         }
@@ -56,7 +53,9 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
             Location.sharedInstance.longitude = currentLocation?.coordinate.longitude
             print(Location.sharedInstance.latitude, Location.sharedInstance.longitude)
             dataDownloader.downloadWeatherDetails {
-                self.downloadForecastDetails {
+                self.dataDownloader.downloadForecastDetails {
+                    print(self.dataDownloader.currentCityName)
+                    print(self.dataDownloader.forecasts)
                     self.currentWeather.receiveData(dataDownload: self.dataDownloader)
                     self.uploadMainUI()
                     self.tableView.reloadData()
@@ -67,23 +66,6 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         }
     }
     
-    func downloadForecastDetails(completed: @escaping DownloadComplete) {
-        var forecasts = [Forecast]()
-        let forecastURL = URL(string: FORECAST_URL)!
-        Alamofire.request(forecastURL).responseJSON { response in
-            let result = response.result
-            if let dict = result.value as? Dictionary<String, Any> {
-                if let list = dict["list"] as? [Dictionary<String, Any>] {
-                    for obj in list {
-                        let forecast = Forecast(weatherDict: obj)
-                        forecasts.append(forecast)
-                    }
-                    forecasts.remove(at: 0)
-                }
-            }
-            completed()
-        }
-    }
 
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -91,12 +73,12 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return forecasts.count
+        return dataDownloader.forecasts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as? WeatherCell {
-            let forecast = forecasts[indexPath.row]
+            let forecast = dataDownloader.forecasts[indexPath.row]
             cell.configureCell(forecast: forecast)
             return cell
         } else {

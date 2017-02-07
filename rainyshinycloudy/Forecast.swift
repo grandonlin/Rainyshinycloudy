@@ -49,6 +49,7 @@ class Forecast {
             if let min = temp["min"] as? Double {
                 let kelvinToCelsius = Double(round(min - 273.15))
                 self._lowTemp = "\(kelvinToCelsius)"
+                print(self._lowTemp)
             }
             
             if let max = temp["max"] as? Double {
