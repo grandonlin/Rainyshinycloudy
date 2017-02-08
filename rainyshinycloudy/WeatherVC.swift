@@ -24,7 +24,7 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     let dataDownloader = DataDownload()
     var currentWeather : CurrentWeather!
     //var forecast = Forecast()
-    
+    var inUse = false
     
     
     override func viewDidLoad() {
@@ -34,7 +34,7 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startMonitoringSignificantLocationChanges()
-        locationManager.startUpdatingLocation()
+        
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -42,9 +42,25 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         currentWeather = CurrentWeather()
         }
 
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
+        
+        switch status {
+        case CLAuthorizationStatus.authorizedWhenInUse:
+            inUse = true
+        case CLAuthorizationStatus.authorizedAlways:
+            inUse = true
+        default:
+            inUse = false
+        }
+        
+        if inUse == true {
+            locationManager.startUpdatingLocation()
+        }
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+        if inUse == true {
             currentLocation = locationManager.location
             if currentLocation != nil {
                 locationManager.stopUpdatingLocation()
@@ -53,16 +69,17 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
             Location.sharedInstance.longitude = currentLocation?.coordinate.longitude
             //print(Location.sharedInstance.latitude, Location.sharedInstance.longitude)
             dataDownloader.downloadWeatherDetails {
-                self.dataDownloader.downloadForecastDetails {
                     //print(self.dataDownloader.currentCityName)
-                    //print(self.dataDownloader.forecasts)
+                    //print(self.dataDownloader.forecasts.count)
                     self.currentWeather.receiveData(dataDownload: self.dataDownloader)
                     self.uploadMainUI()
-                    self.tableView.reloadData()
                 }
+            dataDownloader.downloadForecastDetails {
+                self.tableView.reloadData()
             }
         } else {
             locationManager.requestWhenInUseAuthorization()
+            
         }
     }
     
@@ -73,7 +90,7 @@ class WeatherVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //print(dataDownloader.forecasts.count)
+        print(dataDownloader.forecasts.count)
         return dataDownloader.forecasts.count
         
     }

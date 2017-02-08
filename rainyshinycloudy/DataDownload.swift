@@ -38,7 +38,8 @@ class DataDownload {
                 
                 if let main = dict["main"] as? Dictionary<String, Any> {
                     if let currentTemperature = main["temp"] as? Double {
-                        let kelvinToCelsius = Double(round(currentTemperature - 273.15))
+                        //print(currentTemperature)
+                        let kelvinToCelsius = Double(round((currentTemperature - 273.15) * 100) / 100)
                         self.currentTemp = kelvinToCelsius
                         //print(self.currentTemp)
                     }
@@ -65,6 +66,7 @@ class DataDownload {
             }
             completed()
         }
+        
     }
     
     
